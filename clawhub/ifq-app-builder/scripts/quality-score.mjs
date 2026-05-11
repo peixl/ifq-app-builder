@@ -23,11 +23,13 @@ if (!files.length) {
 const RED = '\x1b[31m', GREEN = '\x1b[32m', YELLOW = '\x1b[33m', DIM = '\x1b[2m', RESET = '\x1b[0m';
 
 const results = [];
+let fileErrors = 0;
 for (const rel of files) {
   const abs = resolve(process.cwd(), rel);
   if (!existsSync(abs)) {
     if (jsonOut) results.push({ file: rel, error: 'not found' });
     else console.error(`${RED}✗${RESET} not found: ${abs}`);
+    fileErrors++;
     continue;
   }
   const raw = await readFile(abs, 'utf8');
@@ -37,6 +39,7 @@ for (const rel of files) {
 
 if (jsonOut) {
   process.stdout.write(JSON.stringify(results, null, 2) + '\n');
+  if (fileErrors > 0) process.exit(2);
   if (strict && results.some(r => (r.total ?? 0) < 80)) process.exit(1);
   process.exit(0);
 }
@@ -53,6 +56,11 @@ for (const r of results) {
   }
   if (r.bonus) console.log(`  ${DIM}+ bonus (scaffold/contract): +${r.bonus}${RESET}`);
   if (r.total < 80) belowThreshold++;
+}
+
+if (fileErrors > 0) {
+  console.log(`\n${RED}✗ ${fileErrors} file(s) could not be read${RESET}`);
+  process.exit(2);
 }
 
 if (strict && belowThreshold > 0) {

@@ -50,6 +50,7 @@ npm install            # 零运行时依赖
 npm test               # node --test，无网络
 npm run smoke          # 60 秒仓库级体检
 npm run validate       # smoke + 模板策略校验 + ClawHub 包检查
+npm run pack:clawhub   # 可复现的 OpenClaw/ClawHub tarball
 ```
 
 本地 CI 全部跑在 `npm install && npm test && npm run validate`。不需要平台 SDK、不需要 Docker、不需要 Python。macOS / Linux / Windows 全绿。
@@ -123,4 +124,4 @@ npm run verify:lite -- /path/to/pdf-invoice-ledger.prompt.md
 - 三句话框架受 [Codex-Getting-Started-Tutorial](https://github.com/peixl/Codex-Getting-Started-Tutorial) 中 prompt 质量条工作启发。
 - skill 结构与验证约定沿用 [`ifq-design-skills`](https://github.com/peixl/ifq-design-skills) 的质量标准。
 
-— shaped with [ifq.ai](https://ifq.ai)/app-builder · root · v1.0.0
+— shaped with [ifq.ai](https://ifq.ai)/app-builder · root · v1.0.1

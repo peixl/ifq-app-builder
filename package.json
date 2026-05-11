@@ -1,6 +1,6 @@
 {
   "name": "ifq-app-builder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "IFQ App Builder — an agent-native skill that turns three sentences into a verified build-ready prompt bundle for PC, macOS, Windows, iOS, Android, HarmonyOS, WeChat MiniProgram, self-hosted local web, PWA, or CLI. The core loop is ZERO-install: route mode → fork template → fill three-sentence intent → verify. Platform SDKs are only required by the coding agent that executes the bundle and remain optional.",
   "author": "ifq.ai",
@@ -46,6 +46,7 @@
     "validate": "npm run smoke && npm run validate:templates && npm run validate:clawhub",
     "validate:templates": "node scripts/validate-templates.mjs",
     "validate:clawhub": "node clawhub/ifq-app-builder/scripts/smoke-test.mjs",
+    "pack:clawhub": "node clawhub/ifq-app-builder/scripts/pack-skill.mjs",
     "verify:lite": "node scripts/verify-lite.mjs",
     "quality:score": "node scripts/quality-score.mjs",
     "quality:score:json": "node scripts/quality-score.mjs --json"

@@ -1,6 +1,6 @@
 {
   "name": "ifq-app-builder-clawhub",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "ClawHub-safe OpenClaw edition of IFQ App Builder: three sentences into a verified build-ready app prompt bundle across 12 platform modes.",
   "author": "ifq.ai",

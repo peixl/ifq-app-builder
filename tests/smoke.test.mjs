@@ -49,3 +49,8 @@ test('quality-score.mjs --json on sample bundle parses & total>=90', async () =>
   assert.ok(Array.isArray(data) && data.length === 1);
   assert.ok(data[0].total >= 90, `expected score >=90, got ${data[0].total}`);
 });
+
+test('quality-score.mjs: exits 2 for missing bundle', async () => {
+  const r = await run('quality-score.mjs', ['missing.prompt.md']);
+  assert.equal(r.code, 2, `quality-score should fail on missing input:\nSTDOUT:\n${r.out}\nSTDERR:\n${r.err}`);
+});

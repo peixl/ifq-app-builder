@@ -9,7 +9,7 @@ npm run validate
 npm run pack
 ```
 
-The pack command writes `../ifq-app-builder-clawhub-YYYY-MM-DD.tar.gz` by default.
+The pack command writes `../ifq-app-builder-clawhub-YYYY-MM-DD.tar.gz` by default. Archive mtimes default to `0` for reproducible output; set `SOURCE_DATE_EPOCH=<unix seconds>` only when a release process needs a specific timestamp.
 
 ## Why a dedicated bundle
 

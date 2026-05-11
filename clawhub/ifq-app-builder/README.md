@@ -33,6 +33,16 @@ openclaw skills check ifq-app-builder
 
 第一轮不应该要求登录、装 Xcode/Android Studio/Flutter/Rust、配置证书、开后台服务或提交商店。
 
+## 适合直接试的提示
+
+```text
+做一个公司内网研发周报系统，Docker 一键起，登录走 LDAP，默认支持 zh-CN/en。
+做一个微信小程序：员工健康打卡，一周自动出统计表。
+做一个命令行工具：扫一个文件夹里所有截图，按内容自动改名。
+```
+
+探索阶段一句话就够；如果已经知道用户、平台和验收标准，直接给三句话会更稳。
+
 ## 12 个平台模式
 
 | Mode | 平台 | Template |
@@ -60,6 +70,8 @@ npm run verify:lite -- demos/desktop-invoice-ledger.prompt.md
 npm run quality:score -- demos/desktop-invoice-ledger.prompt.md
 npm run pack                 # 输出 ../ifq-app-builder-clawhub-YYYY-MM-DD.tar.gz
 ```
+
+`npm run pack` 是可复现打包：archive mtime 固定、禁止项会被拦截、schema artifact 不会进入上传包。
 
 ## 为什么适合 ClawHub
 

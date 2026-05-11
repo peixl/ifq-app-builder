@@ -33,6 +33,16 @@ A good first run returns six pieces of evidence:
 
 The first run should not ask for login, install Xcode/Android Studio/Flutter/Rust, configure certificates, start background services, or claim store submission.
 
+## Good starter prompts
+
+```text
+Build a self-hosted engineering weekly-report system with Docker Compose, LDAP login, and zh-CN/en strings by default.
+Create a WeChat MiniProgram for employee health check-ins that produces weekly statistics automatically.
+Create a CLI tool that scans every screenshot in a folder and renames each file by detected content.
+```
+
+Use one ordinary sentence when you are exploring; use three sentences when you already know user, platform, and acceptance.
+
 ## Maintainer commands
 
 ```bash
@@ -43,6 +53,8 @@ npm run verify:lite -- demos/desktop-invoice-ledger.prompt.md
 npm run quality:score -- demos/desktop-invoice-ledger.prompt.md
 npm run pack
 ```
+
+`npm run pack` is reproducible: archive mtimes are fixed, forbidden entries are rejected, and schema artifacts stay out of the upload.
 
 ## Why ClawHub should like it
 

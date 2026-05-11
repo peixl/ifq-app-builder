@@ -2,7 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { scanBundle } from './lib/bundle-scanner.mjs';
+import { scanBundle, scoreBundle } from './lib/bundle-scanner.mjs';
 import { validateEvalSuite } from './lib/evals-validator.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -169,10 +169,13 @@ function checkTemplatesAndDemos() {
   for (const mode of ['A-01','A-02','A-03','A-04','A-05','A-06','A-07','A-08','A-09','A-10','A-11','A-12']) if (!seen.has(mode)) fail(`INDEX missing ${mode}`);
 
   for (const file of fs.readdirSync(path.join(root, 'demos')).filter((entry) => entry.endsWith('.prompt.md'))) {
-    const result = scanBundle(read(`demos/${file}`), { templateMode: false });
+    const raw = read(`demos/${file}`);
+    const result = scanBundle(raw, { templateMode: false });
     for (const finding of result.findings.filter((f) => f.level === 'error')) fail(`demo ${file}: ${finding.code} ${finding.message}`);
+    const score = scoreBundle(raw);
+    if (score.total < 90) fail(`demo ${file}: quality score ${score.total}/100 is below 90`);
   }
-  ok('templates and demo bundles scan clean');
+  ok('templates and demo bundles scan clean with demo quality >= 90');
 }
 
 function checkEvalSuite() {

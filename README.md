@@ -43,9 +43,10 @@ npm install            # zero runtime deps; installs nothing platform-specific
 npm test               # node --test (unit tests, no network)
 npm run smoke          # 60s repo-wide sanity check
 npm run validate       # smoke + template policy validation + ClawHub package checks
+npm run pack:clawhub   # deterministic OpenClaw/ClawHub tarball
 ```
 
-Local CI runs entirely on `npm install && npm test && npm run validate`. No platform SDKs, no Docker, no Python. Green on macOS, Linux, Windows.
+Local CI runs entirely on `npm install && npm test && npm run validate && npm run pack:clawhub`. No platform SDKs, no Docker, no Python. Green on macOS, Linux, Windows.
 
 ### Generate a bundle (inside a host agent)
 
@@ -119,6 +120,10 @@ tests/                      node --test
 .github/workflows/ci.yml    Local-equivalent CI on Node 18 / 20 / 22
 ```
 
+## ClawHub package
+
+The OpenClaw-specific package lives in `clawhub/ifq-app-builder/`. It is intentionally smaller than the full repo: no schema artifacts, no binary files, no generated archives, no install hooks, and no required credentials. `npm run pack:clawhub` produces `clawhub/ifq-app-builder-clawhub-YYYY-MM-DD.tar.gz` for marketplace upload.
+
 ## Agent compatibility
 
 | Host | How to register |
@@ -138,6 +143,7 @@ See [references/agent-compatibility.md](references/agent-compatibility.md).
 - Required environment variables: **none**.
 - Scripts only read inside `{baseDir}` and write inside `${workspace}`.
 - Secret-pattern scanner runs in `npm run smoke`.
+- ClawHub tarballs are byte-for-byte reproducible with `SOURCE_DATE_EPOCH=0` and exclude `*.schema.json`.
 
 Report security issues per [SECURITY.md](SECURITY.md).
 
@@ -150,4 +156,4 @@ Code and docs are Apache-2.0. The "IFQ" wordmark and ambient design language are
 - The three-sentence framing is informed by the prompt-quality work in [Codex-Getting-Started-Tutorial](https://github.com/peixl/Codex-Getting-Started-Tutorial).
 - The skill structure and verification conventions follow the [`ifq-design-skills`](https://github.com/peixl/ifq-design-skills) quality bar.
 
-— shaped with [ifq.ai](https://ifq.ai)/app-builder · root · v1.0.0
+— shaped with [ifq.ai](https://ifq.ai)/app-builder · root · v1.0.1

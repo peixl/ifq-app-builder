@@ -9,7 +9,8 @@
 | `npm run verify:lite -- --template <template.prompt.md>` | Same but tolerates `<replace: ...>` placeholders (for the unfilled templates in this repo). | `0` clean, `1` findings |
 | `npm run smoke` | 60s repo-wide sanity: INDEX.json valid, every referenced template exists, every template scans clean in `--template` mode, no secret leaks anywhere in repo, and ClawHub skill scripts clear the safety deny-list. | `0` clean, `1` findings |
 | `npm run validate` | `smoke` plus template, eval, package, and ClawHub cleanliness checks. | `0` clean, `1` findings |
-| `npm run quality:score -- <bundle.prompt.md>` | Prints 0–100 score with missing axes. | always `0` (informational), `--strict` flag fails if score < 80 |
+| `npm run pack` | Builds a deterministic ClawHub tarball with fixed archive mtimes and forbidden-entry checks. | `0` clean, `1` findings |
+| `npm run quality:score -- <bundle.prompt.md>` | Prints 0–100 score with missing axes. | `0` informational, `1` if `--strict` and score < 80, `2` file error |
 
 ## Tier 1 (executed by the calling coding agent, not by this skill)
 
@@ -54,4 +55,4 @@ These are **never** run by `npm test`. The skill stays zero-install.
 
 ## CI
 
-`.github/workflows/ci.yml` runs `npm install`, `npm test`, `npm run smoke`, `npm run validate` on Node 18, 20, 22, on macOS + Ubuntu. Local CI runs the same chain.
+The root repository CI runs this ClawHub package through `npm run validate`, prompt verification, strict quality scoring, and deterministic packing on Node 18, 20, 22 across macOS, Ubuntu, and Windows.

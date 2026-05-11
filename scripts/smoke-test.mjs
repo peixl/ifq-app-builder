@@ -36,7 +36,7 @@ for (const rel of REQUIRED_FILES) {
 ok(`${REQUIRED_FILES.length} required files checked`);
 
 // Walk the repo for secret-shaped tokens (skip .git, node_modules).
-const SKIP = new Set(['.git', 'node_modules', '.next', '.omx', 'dist', 'build', 'out']);
+const SKIP = new Set(['.git', 'node_modules', '.next', '.omx', '.tmp', 'coverage', 'dist', 'build', 'out']);
 const TEXT_EXT = new Set(['.md', '.mjs', '.js', '.cjs', '.ts', '.tsx', '.json', '.yml', '.yaml', '.css', '.html', '.svg', '.toml']);
 
 async function walk(dir) {

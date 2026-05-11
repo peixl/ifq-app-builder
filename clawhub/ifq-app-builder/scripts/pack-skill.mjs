@@ -20,7 +20,8 @@ function parseIgnore(file) {
 
 function getArg(flag, fallback) {
   const idx = process.argv.indexOf(flag);
-  return idx >= 0 ? process.argv[idx + 1] : fallback;
+  if (idx >= 0 && process.argv[idx + 1]) return process.argv[idx + 1];
+  return process.argv.slice(2).find((arg) => !arg.startsWith('-')) || fallback;
 }
 
 function globToRegex(pattern) {
@@ -123,6 +124,8 @@ const pkg = JSON.parse(fs.readFileSync(path.join(repoRoot, 'package.json'), 'utf
 const stamp = new Date().toISOString().slice(0, 10);
 const defaultOut = path.join(path.dirname(repoRoot), `${pkg.name}-${stamp}.tar.gz`);
 const outPath = path.resolve(getArg('--out', defaultOut));
+const sourceDateEpoch = Number.parseInt(process.env.SOURCE_DATE_EPOCH || '0', 10);
+const archiveMtime = Number.isFinite(sourceDateEpoch) && sourceDateEpoch >= 0 ? sourceDateEpoch : 0;
 const ignorePatterns = [
   ...parseIgnore(path.join(repoRoot, 'clawhub.ignore.txt')),
   '.git', '.DS_Store', 'node_modules', '.clawignore',
@@ -140,19 +143,19 @@ for (const item of entries) {
   archivedPaths.push(archivedName);
 
   if (item.type === 'dir') {
-    chunks.push(makeTarHeader({ name: archivedName, size: 0, mode: 0o755, mtime: Math.floor(stat.mtimeMs / 1000), typeflag: '5' }));
+    chunks.push(makeTarHeader({ name: archivedName, size: 0, mode: 0o755, mtime: archiveMtime, typeflag: '5' }));
     continue;
   }
 
   const data = fs.readFileSync(absPath);
-  chunks.push(makeTarHeader({ name: archivedName, size: data.length, mode: stat.mode & 0o7777 || 0o644, mtime: Math.floor(stat.mtimeMs / 1000), typeflag: '0' }));
+  chunks.push(makeTarHeader({ name: archivedName, size: data.length, mode: stat.mode & 0o7777 || 0o644, mtime: archiveMtime, typeflag: '0' }));
   chunks.push(data);
   const pad = padToBlock(data.length);
   if (pad) chunks.push(Buffer.alloc(pad));
 }
 
 chunks.push(Buffer.alloc(1024));
-fs.writeFileSync(outPath, zlib.gzipSync(Buffer.concat(chunks), { level: 9 }));
+fs.writeFileSync(outPath, zlib.gzipSync(Buffer.concat(chunks), { level: 9, mtime: archiveMtime }));
 
 const forbidden = archivedPaths.filter((entry) => /(^|\/)\.git\//.test(entry)
   || /(^|\/)\.DS_Store$/.test(entry)
@@ -184,3 +187,4 @@ console.log('✓ skill bundle ready');
 console.log(`  path: ${path.relative(process.cwd(), outPath)}`);
 console.log(`  size: ${(size / 1024).toFixed(1)} KiB`);
 console.log(`  entries: ${archivedPaths.length}`);
+console.log(`  mtime: ${archiveMtime}`);

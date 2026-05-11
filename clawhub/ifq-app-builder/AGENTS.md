@@ -1,6 +1,6 @@
 # AGENTS.md
 
-This folder is the ClawHub-safe OpenClaw edition of `ifq-app-builder` (v1.0.0).
+This folder is the ClawHub-safe OpenClaw edition of `ifq-app-builder` (v1.0.1).
 
 ## Entry point
 
@@ -33,4 +33,4 @@ npm run evals:validate
 npm run pack
 ```
 
-All must pass before publishing to ClawHub.
+All must pass before publishing to ClawHub. The root repo also tests that two consecutive `npm run pack` outputs are byte-for-byte identical and contain no schema artifacts.

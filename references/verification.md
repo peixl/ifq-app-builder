@@ -9,7 +9,8 @@
 | `npm run verify:lite -- --template <template.prompt.md>` | Same but tolerates `<replace: ...>` placeholders (for the unfilled templates in this repo). | `0` clean, `1` findings |
 | `npm run smoke` | 60s repo-wide sanity: INDEX.json valid, every referenced template exists, every template scans clean in `--template` mode, no secret leaks anywhere in repo, and skill scripts avoid process spawning / dynamic loading. | `0` clean, `1` findings |
 | `npm run validate` | `smoke` + `validate:templates` + `validate:clawhub`. | `0` clean, `1` findings |
-| `npm run quality:score -- <bundle.prompt.md>` | Prints 0–100 score with missing axes. | always `0` (informational), `--strict` flag fails if score < 80 |
+| `npm run pack:clawhub` | Builds the deterministic OpenClaw/ClawHub tarball and rejects forbidden entries. | `0` clean, `1` findings |
+| `npm run quality:score -- <bundle.prompt.md>` | Prints 0–100 score with missing axes. | `0` informational, `1` if `--strict` and score < 80, `2` file error |
 
 ## Tier 1 (executed by the calling coding agent, not by this skill)
 
@@ -54,4 +55,4 @@ These are **never** run by `npm test`. The skill stays zero-install.
 
 ## CI
 
-`.github/workflows/ci.yml` runs `npm install`, `npm test`, `npm run smoke`, `npm run validate` on Node 18, 20, 22, on macOS + Ubuntu. Local CI runs the same chain.
+`.github/workflows/ci.yml` runs `npm install`, `npm test`, `npm run validate`, prompt verification, strict quality scoring, and ClawHub packing on Node 18, 20, 22 across macOS, Ubuntu, and Windows. Local CI runs the same chain.

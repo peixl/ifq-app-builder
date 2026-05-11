@@ -17,11 +17,12 @@ npm install
 npm test                  # node --test
 npm run smoke             # repo-wide sanity
 npm run validate          # smoke + template policy + ClawHub package checks
+npm run pack:clawhub      # reproducible marketplace archive
 npm run verify:lite -- assets/templates/pc-tauri.prompt.md
 npm run quality:score -- assets/templates/pc-tauri.prompt.md
 ```
 
-All four must exit `0` before you push.
+All commands above must exit `0` before you push.
 
 ## Adding a new mode
 
@@ -29,7 +30,7 @@ All four must exit `0` before you push.
 2. Write `assets/templates/<your-template>.prompt.md` that follows the three-sentence contract.
 3. Add a row to the Quick Reference table in `SKILL.md` and to the table in both READMEs.
 4. Add a unit test under `tests/` that loads your template and checks it scores ≥ 90 with `quality-score.mjs`.
-5. Run `npm test && npm run validate` and paste the green output in your PR.
+5. Run `npm test && npm run validate && npm run pack:clawhub` and paste the green output in your PR.
 
 ## Commit style
 
