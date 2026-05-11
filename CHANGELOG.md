@@ -14,7 +14,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
     `T-android-compose`, `T-harmonyos-arkts`, `T-flutter-cross`,
     `T-react-native-expo`, `T-wechat-miniprogram`, `T-local-web-nextjs`,
     `T-pwa-vite`, `T-cli-node-python`.
-- Schema-validated `assets/templates/INDEX.json` with `templates.schema.json`.
+- Policy-validated `assets/templates/INDEX.json` without shipping schema artifacts.
 - `references/` deep docs: modes, three-sentence contract, platform matrix, quality bar, verification, packaging, i18n, security baseline, IFQ brand spec, agent compatibility, quickstart.
 - Scripts: `verify-lite.mjs`, `smoke-test.mjs`, `validate-templates.mjs`, `quality-score.mjs`.
 - `tests/` with `node --test` coverage for verify-lite, smoke, templates, and quality-score.

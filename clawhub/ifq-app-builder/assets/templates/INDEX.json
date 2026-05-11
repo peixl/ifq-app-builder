@@ -1,5 +1,4 @@
 {
-  "$schema": "./templates.schema.json",
   "version": "1.0.0",
   "author": "ifq-app-builder",
   "description": "IFQ App Builder · 12 build-bundle templates. Each template is a paste-ready prompt the calling coding agent can execute end-to-end (scaffold → run → verify → package). Templates are forked into the user's workspace and filled with their three-sentence intent; never start from a blank prompt.",

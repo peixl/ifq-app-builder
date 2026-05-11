@@ -42,7 +42,7 @@ cd ifq-app-builder
 npm install            # zero runtime deps; installs nothing platform-specific
 npm test               # node --test (unit tests, no network)
 npm run smoke          # 60s repo-wide sanity check
-npm run validate       # smoke + template schema validation
+npm run validate       # smoke + template policy validation + ClawHub package checks
 ```
 
 Local CI runs entirely on `npm install && npm test && npm run validate`. No platform SDKs, no Docker, no Python. Green on macOS, Linux, Windows.
@@ -107,13 +107,13 @@ agents/openai.yaml          Display name, examples, invocation chips
 assets/
   ifq-brand/                Brand tokens, DNA, ambient marks
   templates/
-    INDEX.json              Schema-validated registry of the 12 templates
+    INDEX.json              Policy-validated registry of the 12 templates
     *.prompt.md             The 12 build bundles you fork
 references/                 Deep docs: contract, modes, quality, packaging, ...
 scripts/
   verify-lite.mjs           Static scan: S1/S2/S3, colophon, placeholders, secrets
   smoke-test.mjs            60s repo-wide sanity
-  validate-templates.mjs    INDEX.json + each template schema check
+  validate-templates.mjs    INDEX.json policy check + each template scan
   quality-score.mjs         0–100 score with missing axes
 tests/                      node --test
 .github/workflows/ci.yml    Local-equivalent CI on Node 18 / 20 / 22

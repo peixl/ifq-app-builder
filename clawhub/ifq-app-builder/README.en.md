@@ -12,7 +12,7 @@ openclaw skills info ifq-app-builder
 openclaw skills check ifq-app-builder
 ```
 
-This package is designed for one-pass ClawHub review: zero dependencies, zero install hooks, no required credentials, no script-side network, no process spawning, workspace-only permissions, and deterministic tarball packaging.
+This package is designed for one-pass ClawHub review: zero dependencies, zero install hooks, no required credentials, no script-side network, no process spawning, no schema artifacts in the tarball, workspace-only permissions, and deterministic tarball packaging.
 
 ## First run
 
@@ -51,7 +51,7 @@ npm run pack
 | Clear job | App prompt bundles only; no visual-only design, SEO, or backend-only scope |
 | First-run value | Natural language → mode route → template fork → verified prompt bundle |
 | Safe boundary | No SDK install, no credentials, no daemon, workspace-only writes |
-| Scanner-friendly | Zero dependencies, no install hooks, scripts have no network or process-spawn primitives |
+| Scanner-friendly | Zero dependencies, no install hooks, no schema artifacts, scripts have no network or process-spawn primitives |
 | Maintainable | `clawhub.json`, frontmatter, evals, templates, and validate checks agree |
 
 ## Publish

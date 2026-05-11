@@ -49,7 +49,7 @@ cd ifq-app-builder
 npm install            # 零运行时依赖
 npm test               # node --test，无网络
 npm run smoke          # 60 秒仓库级体检
-npm run validate       # smoke + 模板 schema 校验
+npm run validate       # smoke + 模板策略校验 + ClawHub 包检查
 ```
 
 本地 CI 全部跑在 `npm install && npm test && npm run validate`。不需要平台 SDK、不需要 Docker、不需要 Python。macOS / Linux / Windows 全绿。

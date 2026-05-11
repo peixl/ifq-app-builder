@@ -1,13 +1,12 @@
 #!/usr/bin/env node
 // smoke-test — 60s repo-wide sanity. No network. No installs.
-// Checks: required files exist, scripts pass `node --check`, no secret leaks anywhere in repo,
-// each template scans clean in template-mode, SKILL.md front-matter parses, agents/openai.yaml present.
+// Checks: required files exist, no schema artifacts ship as skill content, no secret leaks anywhere
+// in repo, each template scans clean in template-mode, SKILL.md front-matter parses.
 
-import { readFile, readdir, stat } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { checkScript } from './lib/node-check.mjs';
 import { scanBundle, _internal } from './lib/bundle-scanner.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -23,7 +22,7 @@ const REQUIRED_FILES = [
   'CONTRIBUTING.md', 'CHANGELOG.md', 'AGENTS.md', 'package.json',
   'agents/openai.yaml',
   'assets/ifq-brand/ifq-tokens.css', 'assets/ifq-brand/BRAND-DNA.md', 'assets/ifq-brand/mark.svg',
-  'assets/templates/INDEX.json', 'assets/templates/templates.schema.json',
+  'assets/templates/INDEX.json',
   'references/modes.md', 'references/three-sentence-contract.md', 'references/platform-matrix.md',
   'references/quality-bar.md', 'references/verification.md', 'references/packaging.md',
   'references/i18n.md', 'references/security-baseline.md', 'references/ifq-brand-spec.md',
@@ -54,6 +53,15 @@ async function walk(dir) {
 const allFiles = await walk(ROOT);
 ok(`${allFiles.length} text files discovered`);
 
+const schemaArtifacts = allFiles
+  .map(f => path.relative(ROOT, f).replace(/\\/g, '/'))
+  .filter(rel => rel.endsWith('.schema.json'));
+if (schemaArtifacts.length) {
+  for (const rel of schemaArtifacts) fail(`schema artifact must not ship in skill content: ${rel}`);
+} else {
+  ok('no *.schema.json artifacts present in skill content');
+}
+
 // Secret scan, except inside test fixtures expected to carry obfuscated examples.
 const SECRET_PATTERNS = _internal.SECRET_PATTERNS;
 let secretFinds = 0;
@@ -73,14 +81,15 @@ for (const f of allFiles) {
 }
 if (secretFinds === 0) ok('no secret-shaped tokens found in repo');
 
-// `node --check` every script & test.
+// Skill scripts must avoid process-spawning and dynamic-code primitives.
 const scripts = (await walk(path.join(ROOT, 'scripts'))).filter(p => p.endsWith('.mjs'));
-const tests = (await walk(path.join(ROOT, 'tests'))).filter(p => p.endsWith('.mjs'));
-for (const f of [...scripts, ...tests]) {
-  const r = await checkScript(f);
-  if (!r.ok) fail(`syntax error in ${path.relative(ROOT, f)}: ${r.message}`);
+for (const f of scripts) {
+  const rel = path.relative(ROOT, f);
+  const raw = await readFile(f, 'utf8');
+  if (/^\s*import\s+.*['"](?:node:)?child_process['"]/m.test(raw)) fail(`${rel}: imports process-spawning primitives`);
+  if (/\beval\s*\(|\bnew\s+Function\s*\(|\bimport\s*\(/.test(raw)) fail(`${rel}: uses dynamic code-loading primitive`);
 }
-ok(`${scripts.length + tests.length} script(s) pass node --check`);
+ok(`${scripts.length} script source file(s) avoid process spawning and dynamic code loading`);
 
 // SKILL.md must start with valid YAML front-matter.
 const skill = await readFile(path.join(ROOT, 'SKILL.md'), 'utf8');

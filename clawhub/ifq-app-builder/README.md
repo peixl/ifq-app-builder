@@ -12,7 +12,7 @@ openclaw skills info ifq-app-builder
 openclaw skills check ifq-app-builder
 ```
 
-本子包目标是 ClawHub 一次审核通过：零依赖、零安装钩子、无必需凭据、无脚本侧网络、无进程创建、workspace-only 权限、可复现 tar.gz 打包。
+本子包目标是 ClawHub 一次审核通过：零依赖、零安装钩子、无必需凭据、无脚本侧网络、无进程创建、tarball 不携带 schema artifact、workspace-only 权限、可复现 tar.gz 打包。
 
 ## 第一次运行应该得到什么
 
@@ -68,7 +68,7 @@ npm run pack                 # 输出 ../ifq-app-builder-clawhub-YYYY-MM-DD.tar.
 | 一眼知道用途 | 只做 app 构建提示包，不抢视觉设计、SEO、后台服务 |
 | 首次运行可见成果 | 自然语言 → mode route → template fork → verified prompt bundle |
 | 安全边界清晰 | 无 SDK 安装、无凭据、无后台、workspace-only |
-| 平台扫描友好 | 零依赖、零 install hooks、脚本无网络和进程创建原语 |
+| 平台扫描友好 | 零依赖、零 install hooks、无 schema artifact、脚本无网络和进程创建原语 |
 | 可维护 | `clawhub.json`、frontmatter、evals、templates、validate 互相校验 |
 
 ## 打包上架

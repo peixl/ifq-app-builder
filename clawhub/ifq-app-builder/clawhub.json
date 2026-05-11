@@ -90,7 +90,7 @@
     "zero_install_hooks": true,
     "deny_list_rules": 18,
     "secret_patterns": 5,
-    "bundle_integrity": "deterministic tarball via node:zlib; no binary assets; no extensionless root files"
+    "bundle_integrity": "deterministic tarball via node:zlib; schema artifacts excluded; no binary assets; no extensionless root files"
   },
   "quick_commands": [
     { "label": "Validate skill health", "command": "npm run validate", "description": "Checks OpenClaw metadata, manifest parity, templates, evals, package safety, script safety, and secret hygiene." },

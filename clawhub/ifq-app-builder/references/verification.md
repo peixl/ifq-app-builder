@@ -7,8 +7,8 @@
 | `npm test` | Unit tests via `node --test` (lib + scanner). | `0` pass, non-zero fail |
 | `npm run verify:lite -- <bundle.prompt.md>` | Single-file scan: S1/S2/S3 present, colophon, no `TODO:` leaks, no plaintext secrets, ≥ 3 binary acceptance items, packaging/security sections present. | `0` clean, `1` findings, `2` file error |
 | `npm run verify:lite -- --template <template.prompt.md>` | Same but tolerates `<replace: ...>` placeholders (for the unfilled templates in this repo). | `0` clean, `1` findings |
-| `npm run smoke` | 60s repo-wide sanity: INDEX.json valid, every referenced template exists, every template scans clean in `--template` mode, no secret leaks anywhere in repo, scripts pass `node --check`. | `0` clean, `1` findings |
-| `npm run validate` | `smoke` + `validate:templates` (JSON schema). | `0` clean, `1` findings |
+| `npm run smoke` | 60s repo-wide sanity: INDEX.json valid, every referenced template exists, every template scans clean in `--template` mode, no secret leaks anywhere in repo, and ClawHub skill scripts clear the safety deny-list. | `0` clean, `1` findings |
+| `npm run validate` | `smoke` plus template, eval, package, and ClawHub cleanliness checks. | `0` clean, `1` findings |
 | `npm run quality:score -- <bundle.prompt.md>` | Prints 0–100 score with missing axes. | always `0` (informational), `--strict` flag fails if score < 80 |
 
 ## Tier 1 (executed by the calling coding agent, not by this skill)

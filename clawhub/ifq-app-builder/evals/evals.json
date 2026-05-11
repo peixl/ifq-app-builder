@@ -1,5 +1,4 @@
 {
-  "$schema": "./evals.schema.json",
   "version": "1.0",
   "purpose": "Regression prompts for IFQ App Builder ClawHub edition. Each scenario protects one platform route, one human-facing outcome, and one OpenClaw-safe agent contract.",
   "quality_principles": [

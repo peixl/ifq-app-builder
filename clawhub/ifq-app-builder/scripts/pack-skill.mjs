@@ -157,6 +157,7 @@ fs.writeFileSync(outPath, zlib.gzipSync(Buffer.concat(chunks), { level: 9 }));
 const forbidden = archivedPaths.filter((entry) => /(^|\/)\.git\//.test(entry)
   || /(^|\/)\.DS_Store$/.test(entry)
   || /(^|\/)\.env(?:\.|$)/.test(entry)
+  || /(^|\/)[^/]+\.schema\.json$/.test(entry)
   || /(^|\/)\.openclaw[^/]*\//.test(entry)
   || /(^|\/)\.claude\//.test(entry)
   || /(^|\/)\.agents\//.test(entry)

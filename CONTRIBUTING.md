@@ -16,7 +16,7 @@ Thanks for considering a contribution. This skill is small on purpose — please
 npm install
 npm test                  # node --test
 npm run smoke             # repo-wide sanity
-npm run validate          # smoke + template schema
+npm run validate          # smoke + template policy + ClawHub package checks
 npm run verify:lite -- assets/templates/pc-tauri.prompt.md
 npm run quality:score -- assets/templates/pc-tauri.prompt.md
 ```
@@ -25,7 +25,7 @@ All four must exit `0` before you push.
 
 ## Adding a new mode
 
-1. Add an entry to `assets/templates/INDEX.json` (validated by `assets/templates/templates.schema.json`).
+1. Add an entry to `assets/templates/INDEX.json` (validated by the built-in template registry policy).
 2. Write `assets/templates/<your-template>.prompt.md` that follows the three-sentence contract.
 3. Add a row to the Quick Reference table in `SKILL.md` and to the table in both READMEs.
 4. Add a unit test under `tests/` that loads your template and checks it scores ≥ 90 with `quality-score.mjs`.

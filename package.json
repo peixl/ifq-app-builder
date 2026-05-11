@@ -43,8 +43,9 @@
     "test": "node --test tests/index.test.mjs",
     "test:ci": "npm test && npm run validate",
     "smoke": "node scripts/smoke-test.mjs",
-    "validate": "npm run smoke && npm run validate:templates",
+    "validate": "npm run smoke && npm run validate:templates && npm run validate:clawhub",
     "validate:templates": "node scripts/validate-templates.mjs",
+    "validate:clawhub": "node clawhub/ifq-app-builder/scripts/smoke-test.mjs",
     "verify:lite": "node scripts/verify-lite.mjs",
     "quality:score": "node scripts/quality-score.mjs",
     "quality:score:json": "node scripts/quality-score.mjs --json"

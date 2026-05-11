@@ -55,6 +55,7 @@ Desktop.ini
 # Local working files and generated bundles
 _archive/
 _temp/
+*.schema.json
 *.tar.gz
 *.tgz
 *.zip

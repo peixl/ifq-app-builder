@@ -42,4 +42,4 @@ If S2 names more than one platform, emit **one bundle per platform** plus a shar
 
 ## Mode metadata is canonical in `assets/templates/INDEX.json`
 
-That file is schema-validated by `scripts/validate-templates.mjs`. This file is for humans; `INDEX.json` is for agents.
+That file is policy-validated by `scripts/validate-templates.mjs`. This file is for humans; `INDEX.json` is for agents.

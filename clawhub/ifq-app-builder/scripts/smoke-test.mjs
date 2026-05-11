@@ -57,9 +57,9 @@ function checkRequiredFiles() {
   const required = [
     'SKILL.md', 'clawhub.json', 'clawhub.ignore.txt', 'package.json', 'README.md', 'README.en.md',
     'AGENTS.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'LICENSE.md', 'NOTICE.md', 'SECURITY.md',
-    'assets/templates/INDEX.json', 'assets/templates/templates.schema.json',
+    'assets/templates/INDEX.json',
     'assets/ifq-brand/BRAND-DNA.md', 'assets/ifq-brand/ifq-tokens.css', 'assets/ifq-brand/mark.svg',
-    'scripts/script-safety-rules.json', 'evals/evals.json', 'evals/evals.schema.json',
+    'scripts/script-safety-rules.json', 'evals/evals.json',
     'references/clawhub-publishing.md', 'references/modes.md', 'references/three-sentence-contract.md',
     'references/verification.md', 'references/quality-bar.md', 'references/security-baseline.md'
   ];
@@ -156,6 +156,7 @@ function checkManifest() {
 
 function checkTemplatesAndDemos() {
   const index = readJson('assets/templates/INDEX.json');
+  if ('$schema' in index) fail('INDEX.json must not reference external schema artifacts');
   if (!Array.isArray(index.modeRoutes) || index.modeRoutes.length !== 12) fail('INDEX.json must list 12 modeRoutes');
   const seen = new Set();
   for (const route of index.modeRoutes || []) {
@@ -182,7 +183,7 @@ function checkEvalSuite() {
 
 function checkClawHubCleanliness() {
   const ignore = read('clawhub.ignore.txt');
-  for (const token of ['.git/', '.github/', 'node_modules/', '.DS_Store', '.openclaw', '.well-known/', '.env', 'personal-asset-index.json']) {
+  for (const token of ['.git/', '.github/', 'node_modules/', '.DS_Store', '.openclaw', '.well-known/', '.env', '*.schema.json', 'personal-asset-index.json']) {
     if (!ignore.includes(token)) fail(`clawhub.ignore.txt must exclude ${token}`);
   }
   const extensionlessRootFiles = fs.readdirSync(root, { withFileTypes: true })
@@ -194,6 +195,7 @@ function checkClawHubCleanliness() {
   const roots = ['assets', 'demos', 'references', 'scripts', 'evals'];
   for (const relRoot of roots) {
     for (const file of walk(path.join(root, relRoot))) {
+      if (file.endsWith('.schema.json')) fail(`schema artifact must not ship in ClawHub skill content: ${path.relative(root, file)}`);
       const ext = path.extname(file).toLowerCase();
       if (!textExtensions.has(ext)) fail(`non-text file detected in skill content: ${path.relative(root, file)}`);
       else {

@@ -21,6 +21,7 @@ ClawHub validators inspect the published artifact, not your intent. A raw reposi
 - references needed by the skill loop
 - zero-dependency validation and packing scripts
 - demo prompt bundles and eval scenarios
+- no `*.schema.json` artifacts in the published bundle; registry and eval checks run from local policy code
 
 ## Safety posture
 
@@ -31,6 +32,7 @@ ClawHub validators inspect the published artifact, not your intent. A raw reposi
 - no process spawning in skill scripts
 - no dynamic execution
 - no binary assets in the ClawHub bundle
+- no JSON schema artifacts in the ClawHub bundle
 - workspace-only filesystem permission
 - shell usage limited to bundled Node scripts
 
@@ -79,6 +81,7 @@ The answer should produce a local `*.prompt.md` bundle, route `A-01`, template `
 |---|---|
 | VCS metadata in upload | `clawhub.ignore.txt` + pack verifier |
 | install-time execution | package safety check rejects lifecycle hooks |
+| schema-file false positives | `*.schema.json` files are excluded by ignore and pack verifier |
 | hidden credentials requirement | manifest and frontmatter require empty env arrays |
 | broad filesystem access | workspace-only permission in manifest + SKILL |
 | script network primitives | script safety rules |
