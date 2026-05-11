@@ -1,0 +1,18 @@
+node_modules/
+.DS_Store
+*.log
+.cache/
+.tmp/
+.vscode/
+.idea/
+coverage/
+dist/
+build/
+out/
+.next/
+.omx/
+.playwright-mcp/
+
+# Generated bundles during local testing
+demos/_out/
+*.bundle.tmp.md

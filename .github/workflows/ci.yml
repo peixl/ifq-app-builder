@@ -1,0 +1,37 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: ${{ matrix.os }} · node ${{ matrix.node }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        node: ['18', '20', '22']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Install (zero runtime deps)
+        run: npm install --no-audit --no-fund || true
+      - name: Unit tests
+        run: npm test
+      - name: Smoke test
+        run: npm run smoke
+      - name: Validate templates
+        run: npm run validate:templates
+      - name: Verify sample bundle
+        run: npm run verify:lite -- tests/fixtures/sample-bundle.prompt.md
+      - name: Quality score (strict)
+        run: node scripts/quality-score.mjs --strict tests/fixtures/sample-bundle.prompt.md

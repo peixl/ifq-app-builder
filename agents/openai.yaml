@@ -1,0 +1,50 @@
+version: "1.0.0"
+
+interface:
+  display_name: "IFQ App Builder"
+  short_description: "Three sentences → verified build-ready prompt bundle for PC / Mac / iOS / Android / HarmonyOS / WeChat MiniProgram / local web / PWA / CLI"
+  icon_small: "./assets/ifq-brand/mark.svg"
+  icon_large: "./assets/ifq-brand/mark.svg"
+  brand_color: "#D4532B"
+  default_prompt: "Use $ifq-app-builder to turn this request into a verified build-ready prompt bundle, then hand it back to me to execute."
+  examples:
+    # A-01 PC cross-desktop
+    - "做一个 Mac + Windows 桌面小工具，把一堆 PDF 发票整理成 Excel 台账"
+    # A-02 macOS native
+    - "做一个 Mac 状态栏 App，监控我每天写作字数"
+    # A-03 Windows native
+    - "Win 上一个本地小工具，把扫描件 OCR 后归档"
+    # A-04 iOS native
+    - "iOS App：把宝宝睡眠记录成时间轴，一周一张分享图"
+    # A-05 Android native
+    - "Android App：通勤路上把语音备忘自动整理成日报"
+    # A-06 HarmonyOS Next
+    - "鸿蒙 Next App，给老人用的大字体公交查询，离线可用"
+    # A-07 Flutter cross-mobile
+    - "iOS + Android 一份代码的家庭账本 App，端到端加密同步"
+    # A-08 React Native / Expo
+    - "Expo 跨端 App：会议室预订，公司域账号登录"
+    # A-09 WeChat MiniProgram
+    - "微信小程序：员工健康打卡，一周自动出统计表"
+    # A-10 Local web self-host
+    - "公司内网部署的研发周报系统，Docker 一键起，登录走 LDAP"
+    # A-11 PWA
+    - "可装在手机桌面的 PWA：跑步配速节拍器，离线可用"
+    # A-12 CLI
+    - "命令行工具：扫一个文件夹里所有截图，按内容自动改名"
+    # Vague — let the skill pick
+    - "我想给团队做个工具，能不能从我描述里推一个最便宜可行的方案"
+
+policy:
+  allow_implicit_invocation: true
+  category_tags:
+    - engineering
+    - app
+    - cross-platform
+    - prompt-engineering
+    - scaffold
+  limitations:
+    - "Not for visual-only design deliverables — defer to ifq-design-skills"
+    - "Not for pure copy editing or SEO marketing sites"
+    - "Does not silently install platform SDKs; bundles describe what the calling agent should run"
+    - "Does not perform store submissions or code-signing on its own"

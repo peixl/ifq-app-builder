@@ -1,0 +1,67 @@
+{
+  "name": "ifq-app-builder",
+  "version": "1.0.0",
+  "private": true,
+  "description": "IFQ App Builder — an agent-native skill that turns three sentences into a verified build-ready prompt bundle for PC, macOS, Windows, iOS, Android, HarmonyOS, WeChat MiniProgram, self-hosted local web, PWA, or CLI. The core loop is ZERO-install: route mode → fork template → fill three-sentence intent → verify. Platform SDKs are only required by the coding agent that executes the bundle and remain optional.",
+  "author": "ifq.ai",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/peixl/ifq-app-builder",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peixl/ifq-app-builder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/peixl/ifq-app-builder/issues"
+  },
+  "keywords": [
+    "ifq",
+    "ifq.ai",
+    "agent-skill",
+    "prompt-engineering",
+    "app-scaffold",
+    "tauri",
+    "electron",
+    "swiftui",
+    "kotlin",
+    "jetpack-compose",
+    "harmonyos",
+    "arkts",
+    "flutter",
+    "react-native",
+    "expo",
+    "wechat-miniprogram",
+    "nextjs",
+    "pwa",
+    "cli",
+    "cross-platform"
+  ],
+  "engines": {
+    "node": ">=18.17"
+  },
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/index.test.mjs",
+    "test:ci": "npm test && npm run validate",
+    "smoke": "node scripts/smoke-test.mjs",
+    "validate": "npm run smoke && npm run validate:templates",
+    "validate:templates": "node scripts/validate-templates.mjs",
+    "verify:lite": "node scripts/verify-lite.mjs",
+    "quality:score": "node scripts/quality-score.mjs",
+    "quality:score:json": "node scripts/quality-score.mjs --json"
+  },
+  "dependencies": {},
+  "files": [
+    "SKILL.md",
+    "README.md",
+    "README.zh-CN.md",
+    "AGENTS.md",
+    "LICENSE",
+    "agents/",
+    "assets/",
+    "references/",
+    "scripts/"
+  ],
+  "systemRequirements": {
+    "note": "The core loop (generate + verify a prompt bundle) requires ZERO system installs beyond Node. Platform SDKs are only needed when the calling coding agent actually builds the app the bundle describes."
+  }
+}
