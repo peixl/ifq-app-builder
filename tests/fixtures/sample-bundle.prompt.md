@@ -1,6 +1,6 @@
 ---
 templateId: T-pc-tauri
-mode: A-01
+ifqMode: A-01
 stack: tauri-2 + react + vite
 artifact: dmg+exe+AppImage
 locale: ['zh-CN', 'en']

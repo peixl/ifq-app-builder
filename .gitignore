@@ -16,3 +16,4 @@ out/
 # Generated bundles during local testing
 demos/_out/
 *.bundle.tmp.md
+clawhub/*.tar.gz
